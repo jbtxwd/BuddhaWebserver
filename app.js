@@ -6,11 +6,12 @@ var cluster=require('cluster');
 var numcpus=require('os').cpus().length;
 var http = require('http'); 
 var app=express();
+var mongoose=require('mongoose');
 
 app.use(express.static('public'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
-app.use('/',apiRouter);
+app.use('/', apiRouter);
 
 if(cluster.isMaster)
 {
@@ -27,6 +28,16 @@ if(cluster.isMaster)
 		console.log('worker'+worker.process.pid +'died');
 		cluster.fork();
 	});
+
+	////mongodb
+	//mongoose.connect('mongodb://127.0.0.1:27017/test');
+	//mongoose.Promise = global.Promise;
+	//var db = mongoose.connection;
+	//db.on('error', console.error.bind(console, 'Mongodb connect error !'))
+	//db.once('open', function() 
+	//{
+ //   	console.log('Mongodb started !')
+	//})
 }
 else
 {
@@ -37,5 +48,7 @@ else
   		console.log('app listening at http://%s:%s', host, port);
 	});
 }
+
+
 
 module.exports = app;
