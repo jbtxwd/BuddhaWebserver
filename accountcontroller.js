@@ -3,7 +3,53 @@ var mongoose = require('mongoose');
 var User = require("./user.js");
 exports.regist = function(req,res)
 {
-	console.log("1111");
+    var username = req.body.username;
+    User.find({ username: username }, function (err, doc)
+    {
+        var result = { "code": -1, "msg": ""};
+        if (!err)
+        {
+            if (doc!=null && doc.length > 0)//有相同的账号
+            {
+                console.log("has player");
+                result.code = 1;
+                result.msg = "has same count";
+                saveResult(res, result);
+            }
+            else
+            {
+                var user = new User();
+                user.username = username;
+                user.password = req.body.password;
+                user.accounttype = req.body.accounttype;
+                user.deviceid = req.body.deviceid;
+
+                user.save(function (err, res)
+                {
+
+                    if (err)
+                    {
+                        result.code = 2;
+                        result.msg = "error";
+                        saveResult(res, result);
+                    }
+                    else
+                    {
+                        result.code = 0;
+                        result.msg = "regist success";
+                        saveResult(res, result);
+                    }
+                });
+            }
+        }
+        else
+        {
+            result.code = 2;
+            result.msg = "has error";
+            saveResult(res, result);
+        }
+
+    });
 }
 
 exports.test =function(req,res) 
@@ -26,4 +72,11 @@ exports.test =function(req,res)
 
     });
     res.send('Data inited'); 
+}
+
+function saveResult(res, data)
+{
+    res.status(200);
+    res.json(data);
+    res.end();
 }

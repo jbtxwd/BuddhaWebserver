@@ -6,8 +6,11 @@ var mongoose = require('./db.js'),
 
 var UserSchema = new Schema({
     username: { type: String},                    //用户账号
-    userpwd: { type: String },                        //密码
+    password: { type: String },                        //密码
+    nickname: { type: String }, 
     userage: { type: Number },                        //年龄
+    deviceid: { type: String },
+    accounttype: { type: Number },
     logindate: { type: Date, "default": Date.now}                       //最近登录时间
 });
 

@@ -10,7 +10,7 @@ router.get('/test',function(req,res){
 	res.send('test ok');
 });
 
-router.get('/account/regist',function(req,res){
+router.post('/account/regist',function(req,res){
 	console.log('start regist'); 
 	accountcontroller.regist(req,res);
 });
