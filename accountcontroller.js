@@ -99,6 +99,7 @@ exports.login = function (req, res)
         {
             if (doc != null)
             {
+                console.log(doc._id.toString());
                 result.code = 1;
                 result.msg = "login sucess";
                 saveResult(res, result);
