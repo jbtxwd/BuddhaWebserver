@@ -11,6 +11,12 @@ var UserSchema = new Schema({
     userage: { type: Number },                        //年龄
     deviceid: { type: String },
     accounttype: { type: Number },
+    displayname: { type: String },
+    blessingscoin: { type: Number, "default":0 },
+    virtue: { type: Number, "default":0 },
+    templecount: { type: Number, "default":0},
+    buddhavalue: { type: String },
+    items: {type:String},
     logindate: { type: Date, "default": Date.now}                       //最近登录时间
 });
 

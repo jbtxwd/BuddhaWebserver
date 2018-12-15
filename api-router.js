@@ -1,4 +1,5 @@
 var express = require('express');
+var buddhacontroller = require('./buddhacontroller');
 var config = require('./config');
 var bodyParser = require('body-parser');
 var app=express();
@@ -21,8 +22,15 @@ router.post('/account/login', function (req, res)
     accountcontroller.login(req, res);
 });
 
-router.get('/account/test',function(req,res){
-	console.log('start test'); 
-	accountcontroller.test(req,res);
+router.post('/account/accountdetail', function (req, res)
+{
+    console.log('start accountdetail');
+    accountcontroller.accountdetail(req, res);
+});
+
+router.post('/buddha/addbuddha', function (req, res)
+{
+    console.log('start addbuddha');
+    buddhacontroller.addbuddha(req, res);
 });
 module.exports = router;

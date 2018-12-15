@@ -66,6 +66,7 @@ exports.login = function (req, res)
             {
                 result.code = 1;
                 result.msg = "login sucess";
+                result.userid = doc._id.toString();
                 saveResult(res, result);
             }
             else//游客注册
@@ -87,6 +88,7 @@ exports.login = function (req, res)
                     {
                         result.code = 1;
                         result.msg = "login sucess";
+                        result.userid = doc._id.toString();
                         saveResult(res, result);
                     }
                 });
@@ -102,6 +104,7 @@ exports.login = function (req, res)
                 console.log(doc._id.toString());
                 result.code = 1;
                 result.msg = "login sucess";
+                result.userid = doc._id.toString();
                 saveResult(res, result);
             }
             else//用户名或者密码不对
@@ -114,6 +117,21 @@ exports.login = function (req, res)
     }
 }
 
+exports.accountdetail = function (req, res)
+{
+    var result = { "code": -1, "msg": "" };
+    var _id = mongoose.Types.ObjectId(req.body._id);
+    User.findOne({ _id: _id }, function (err, doc)
+    {
+        if (doc != null)
+        {
+            result.code = 1;
+            result.msg = "login sucess";
+            result.data = doc;
+            saveResult(res, result);
+        }
+    });
+}
 function saveResult(res, data)
 {
     res.status(200);
