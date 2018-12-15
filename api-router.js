@@ -15,6 +15,11 @@ router.post('/account/regist',function(req,res){
 	accountcontroller.regist(req,res);
 });
 
+router.post('/account/login', function (req, res)
+{
+    console.log('start login');
+    accountcontroller.login(req, res);
+});
 
 router.get('/account/test',function(req,res){
 	console.log('start test'); 
