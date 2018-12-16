@@ -1,6 +1,8 @@
 var express = require("express"); 
 var mongoose = require('mongoose');
 var User = require("./user.js");
+var Buddha = require("./buddha.js");
+var Item = require("./api/item.js");
 exports.regist = function(req,res)
 {
     var username = req.body.username;
@@ -76,7 +78,7 @@ exports.login = function (req, res)
                 user.password = password;
                 user.accounttype = accounttype;
                 user.deviceid = deviceid;
-                user.save(function (err, res)
+                user.save(function (err, ress)
                 {
                     if (err)
                     {
@@ -125,10 +127,19 @@ exports.accountdetail = function (req, res)
     {
         if (doc != null)
         {
-            result.code = 1;
-            result.msg = "login sucess";
-            result.data = doc;
-            saveResult(res, result);
+            Buddha.find({ playerid: _id }, function (err1, doc1)
+            {
+                result.code = 1;
+                result.msg = "login sucess";
+                result.data = doc;
+                result.data.buddhavalue = JSON.stringify(doc1);
+                Item.find({ playerid: _id }, function (err2, doc2)
+                {
+                    result.item = JSON.stringify(doc2);
+                    console.log(result.item + "-----------------------" + JSON.stringify(result));
+                    saveResult(res, result);
+                });
+            });
         }
     });
 }

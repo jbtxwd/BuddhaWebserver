@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var app=express();
 var router = express.Router();
 var accountcontroller = require("./accountcontroller");
-
+var itemcontroller = require("./api/itemcontroller");
 router.get('/test',function(req,res){
 	console.log("test ok");
 	res.send('test ok');
@@ -32,5 +32,17 @@ router.post('/buddha/addbuddha', function (req, res)
 {
     console.log('start addbuddha');
     buddhacontroller.addbuddha(req, res);
+});
+
+router.post('/buddha/changeposition', function (req, res)
+{
+    console.log('start changeposition');
+    buddhacontroller.changeposition(req, res);
+});
+
+router.post('/item/buy', function (req, res)
+{
+    console.log('start item buy');
+    itemcontroller.buy(req, res);
 });
 module.exports = router;

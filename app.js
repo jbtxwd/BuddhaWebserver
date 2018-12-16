@@ -7,6 +7,7 @@ var numcpus=require('os').cpus().length;
 var http = require('http'); 
 var app=express();
 var mongoose=require('mongoose');
+require("./config/configcontroller").loaditemconfig();//º”‘ÿ≈‰÷√±Ì
 
 app.use(express.static('public'));
 app.use(bodyparser.urlencoded({ extended: false }));
