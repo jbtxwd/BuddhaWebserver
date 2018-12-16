@@ -153,6 +153,24 @@ exports.worship = function (req, res)
         saveResult(res, result);
     }
 }
+
+exports.totalrank = function (req, res)
+{
+    var result = { "code": 0, "msg": "" };
+    var buddhaid = req.body.buddhaid;
+    var conditions = { buddhaid: buddhaid };
+    Buddha.find(conditions)
+        .select('playerid playername effect')
+        .sort({ "effect": 1 })
+        .limit(100)
+        .exec(function (err, doc)
+        {
+            result.code = 0;
+            result.msg = "sucess rank";
+            result.data = doc;
+            saveResult(res, result);
+        });
+}
 function saveResult(res, data)
 {
     res.status(200);

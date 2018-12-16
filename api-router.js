@@ -45,6 +45,11 @@ router.post('/buddha/worship', function (req, res)
     buddhacontroller.worship(req, res);
 });
 
+router.post('/buddha/totalrank', function (req, res)
+{
+    buddhacontroller.totalrank(req, res);
+});
+
 router.post('/item/buy', function (req, res)
 {
     console.log('start item buy');
