@@ -2,6 +2,7 @@ var express = require("express");
 var mongoose = require('mongoose');
 var User = require("./user.js");
 var Buddha = require("./buddha.js");
+var BuddhaDailyRank = require("./api/buddhadailyrank.js");
 var configcontroller = require("./config/configcontroller");
 //添加buddha
 exports.addbuddha = function (req, res)
@@ -100,6 +101,7 @@ exports.worship = function (req, res)
     var _id = mongoose.Types.ObjectId(req.body._id);
     var itemid = req.body.itemid;
     var buddhaid = req.body.buddhaid;
+    var nickname = req.body.nickname;
 
     var itemconfig = configcontroller.getitemconfig();
     var item = null;
@@ -145,6 +147,28 @@ exports.worship = function (req, res)
                 saveResult(res, result);
             }
         });
+
+        var conditions1 = { playerid: _id, buddhaid: buddhaid };
+        var updates1 = null;
+        updates1 = { $inc: { effect: item.Effect } };
+
+        BuddhaDailyRank.findOneAndUpdate(conditions, updates, function (err, doc)
+        {
+            if (doc != null)
+            {
+                console.log("dailyrank sucess");
+            }
+            else
+            {
+                var dailyrank = new BuddhaDailyRank();
+                dailyrank.buddhaid = buddhaid;
+                dailyrank.playerid = _id;
+                dailyrank.playername = nickname;
+                dailyrank.effect = item.Effect;
+                dailyrank.save();
+                console.log("new dailyrank sucess");
+            }
+        });
     }
     else//找不到对应的物体
     {
@@ -171,6 +195,25 @@ exports.totalrank = function (req, res)
             saveResult(res, result);
         });
 }
+
+exports.dailyrank = function (req, res)
+{
+    var result = { "code": 0, "msg": "" };
+    var buddhaid = req.body.buddhaid;
+    var conditions = { buddhaid: buddhaid };
+    BuddhaDailyRank.find(conditions)
+        .select('playerid playername effect')
+        .sort({ "effect": 1 })
+        .limit(100)
+        .exec(function (err, doc)
+        {
+            result.code = 0;
+            result.msg = "sucess rank";
+            result.data = doc;
+            saveResult(res, result);
+        });
+}
+
 function saveResult(res, data)
 {
     res.status(200);
