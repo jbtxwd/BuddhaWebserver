@@ -73,7 +73,28 @@ exports.buy = function (req, res)
 
 exports.use = function (req, res)
 {
+    var result = { "code": 0, "msg": "" };
+    var _id = mongoose.Types.ObjectId(req.body._id);
+    var itemid = req.body.itemid;
+    var buddhaid = req.body.buddhaid;
 
+    var conditions = { playerid: _id, itemid: itemid, count: { $gte: 1 } };
+    var updates = { $inc: { count: -1 } };
+    Item.findOneAndUpdate(conditions, updates, function (err, doc)
+    {
+        if (doc != null)
+        {
+            result.code = 0;
+            result.msg = "use item sucess";
+            saveResult(res, result);
+        }
+        else
+        {
+            result.code = 1;
+            result.msg = "no item=" + itemid;
+            saveResult(res, result);
+        }
+    });
 }
 function saveResult(res, data)
 {

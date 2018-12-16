@@ -2,6 +2,7 @@ var express = require("express");
 var mongoose = require('mongoose');
 var User = require("./user.js");
 var Buddha = require("./buddha.js");
+var configcontroller = require("./config/configcontroller");
 //添加buddha
 exports.addbuddha = function (req, res)
 {
@@ -82,21 +83,6 @@ exports.changeposition = function (req, res)
                 result.code = 0;
                 result.msg = "success!";
                 saveResult(res, result);
-                //doc.save(function (err1, doc1)
-                //{
-                //    if (err1)
-                //    {
-                //        result.code = 1;
-                //        result.msg = "save fail!";
-                //        saveResult(res, result);
-                //    }
-                //    else
-                //    {
-                //        result.code = 0;
-                //        result.msg = "success!";
-                //        saveResult(res, result);
-                //    }
-                //});
             }
         }
         else
@@ -106,61 +92,66 @@ exports.changeposition = function (req, res)
             saveResult(res, result);
         }
     });
-    //User.findOne({ _id: _id }, function (err, doc)
-    //{
-    //    if (doc !== null)
-    //    {
-    //        var buddhavalue = doc.buddhavalue;
-    //        if (typeof (buddhavalue) != "undefined" && buddhavalue != "" && buddhavalue != null)
-    //        {
-    //            var jsonarray = JSON.parse(buddhavalue);
-    //            var buddhaa = null;
-    //            var buddhab = null;
-    //            for (i = 0; i < jsonarray.length; i++)
-    //            {
-    //                if (jsonarray[i]["id"] == buddhaida)
-    //                    buddhaa = jsonarray[i];
-    //                if (jsonarray[i]["id"] == buddhaidb)
-    //                    buddhab = jsonarray[i];
-    //            }
-    //            if (buddhaa !== null && buddhab !== null)
-    //            {
-    //                var positiona = buddhaa.position;
-    //                var positionb = buddhab.position;
-    //                buddhaa.position = positionb;
-    //                buddhab.position = positiona;
-    //                doc.buddhavalue = JSON.stringify(jsonarray);
-    //                doc.save(function (err, doc1)
-    //                {
-    //                    if (err)
-    //                    {
-    //                        result.code = 0;
-    //                        result.msg = "save fail!";
-    //                        saveResult(res, result);
-    //                    }
-    //                    else
-    //                    {
-    //                        result.code = 1;
-    //                        result.msg = "success!";
-    //                        saveResult(res, result);
-    //                    }
-    //                });
-    //            }
-    //            else
-    //            {
-    //                result.code = 0;
-    //                result.msg = "a or b not found";
-    //                saveResult(res, result);
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        result.code = 0;
-    //        result.msg = "no user";
-    //        saveResult(res, result);
-    //    }
-    //});
+}
+
+exports.worship = function (req, res)
+{
+    var result = { "code": 0, "msg": "" };
+    var _id = mongoose.Types.ObjectId(req.body._id);
+    var itemid = req.body.itemid;
+    var buddhaid = req.body.buddhaid;
+
+    var itemconfig = configcontroller.getitemconfig();
+    var item = null;
+    for (i = 0; i < itemconfig.length; i++)
+    {
+        if (itemconfig[i].ID == itemid)
+        {
+            item = itemconfig[i];
+        }
+    }
+    if (item != null)
+    {
+        var conditions = { playerid: _id, buddhaid: buddhaid };
+        var updates = null;
+        if (item.Type == 1)//花
+        {
+            updates = { $set: { flower: itemid }, $inc: { effect: item.Effect } };
+        }
+        else if (item.Type == 2)
+        {
+            updates = { $set: { fruit: itemid }, $inc: { effect: item.Effect } };
+        }
+        else if (item.Type = 3)
+        {
+            updates = { $set: { incense: itemid }, $inc: { effect: item.Effect } };
+        }
+        else if (item.Type = 4)
+        {
+            updates = { $set: { cup: itemid }, $inc: { effect: item.Effect } };
+        }
+        Buddha.findOneAndUpdate(conditions, updates, function (err, doc)
+        {
+            if (doc != null)
+            {
+                result.code = 0;
+                result.msg = "sucess";
+                saveResult(res, result);
+            }
+            else
+            {
+                result.code = 1;
+                result.msg = "no buddha data";
+                saveResult(res, result);
+            }
+        });
+    }
+    else//找不到对应的物体
+    {
+        result.code = 3;
+        result.msg = "no item";
+        saveResult(res, result);
+    }
 }
 function saveResult(res, data)
 {

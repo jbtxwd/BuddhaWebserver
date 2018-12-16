@@ -40,9 +40,19 @@ router.post('/buddha/changeposition', function (req, res)
     buddhacontroller.changeposition(req, res);
 });
 
+router.post('/buddha/worship', function (req, res)
+{
+    buddhacontroller.worship(req, res);
+});
+
 router.post('/item/buy', function (req, res)
 {
     console.log('start item buy');
     itemcontroller.buy(req, res);
+});
+
+router.post('/item/use', function (req, res)
+{
+    itemcontroller.use(req, res);
 });
 module.exports = router;
