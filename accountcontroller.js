@@ -25,9 +25,9 @@ exports.regist = function(req,res)
                 user.password = req.body.password;
                 user.accounttype = req.body.accounttype;
                 user.deviceid = req.body.deviceid;
-                user.save(function (err, res)
+                user.save(function (err1, res1)
                 {
-                    if (err)
+                    if (err1)
                     {
                         result.code = 2;
                         result.msg = "error";

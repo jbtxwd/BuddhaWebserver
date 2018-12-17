@@ -50,10 +50,10 @@ router.post('/buddha/totalrank', function (req, res)
     buddhacontroller.totalrank(req, res);
 });
 
-router.post('/buddha/dailyrank', function (req, res)
-{
-    buddhacontroller.dailyrank(req, res);
-});
+//router.post('/buddha/dailyrank', function (req, res)
+//{
+//    buddhacontroller.dailyrank(req, res);
+//});
 
 router.post('/item/buy', function (req, res)
 {

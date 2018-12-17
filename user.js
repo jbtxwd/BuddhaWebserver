@@ -1,14 +1,14 @@
-/**  ĞŞ¸ÄÉÏÊö user.js
- * ÓÃ»§ĞÅÏ¢
+ï»¿/**  ä¿®æ”¹ä¸Šè¿° user.js
+ * ç”¨æˆ·ä¿¡æ¯
  */
 var mongoose = require('./db.js'),
     Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    username: { type: String},                    //ÓÃ»§ÕËºÅ
-    password: { type: String },                        //ÃÜÂë
-    nickname: { type: String }, 
-    userage: { type: Number },                        //ÄêÁä
+    username: { type: String},                    //ç”¨æˆ·è´¦å·
+    password: { type: String },                        //å¯†ç 
+    nickname: { type: String, "default": "æ¸¸å®¢"}, 
+    userage: { type: Number },                        //å¹´é¾„
     deviceid: { type: String },
     accounttype: { type: Number },
     displayname: { type: String },
@@ -17,7 +17,7 @@ var UserSchema = new Schema({
     templecount: { type: Number, "default":0},
     buddhavalue: { type: String },
     items: {type:String},
-    logindate: { type: Date, "default": Date.now}                       //×î½üµÇÂ¼Ê±¼ä
+    logindate: { type: Date, "default": Date.now}                       //æœ€è¿‘ç™»å½•æ—¶é—´
 });
 
 module.exports = mongoose.model('User', UserSchema);
