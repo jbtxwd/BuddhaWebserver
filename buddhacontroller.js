@@ -117,19 +117,19 @@ exports.worship = function (req, res)
         var updates = null;
         if (item.Type == 1)//»¨
         {
-            updates = { $set: { flower: itemid }, $inc: { effect: item.Effect }, $inc: { dailyeffect: item.Effect }};
+            updates = { $set: { flower: itemid }, $inc: { effect: item.Effect, dailyeffect: item.Effect } };
         }
         else if (item.Type == 2)
         {
-            updates = { $set: { fruit: itemid }, $inc: { effect: item.Effect }, $inc: { dailyeffect: item.Effect } };
+            updates = { $set: { fruit: itemid }, $inc: { effect: item.Effect, dailyeffect: item.Effect } };
         }
         else if (item.Type = 3)
         {
-            updates = { $set: { incense: itemid }, $inc: { effect: item.Effect }, $inc: { dailyeffect: item.Effect } };
+            updates = { $set: { incense: itemid }, $inc: { effect: item.Effect, dailyeffect: item.Effect } };
         }
         else if (item.Type = 4)
         {
-            updates = { $set: { cup: itemid }, $inc: { effect: item.Effect }, $inc: { dailyeffect: item.Effect } };
+            updates = { $set: { cup: itemid }, $inc: { effect: item.Effect, dailyeffect: item.Effect } };
         }
         Buddha.findOneAndUpdate(conditions, updates, function (err, doc)
         {

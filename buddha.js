@@ -10,8 +10,8 @@ var BuddhaSchema = new Schema({
     cup: { type: Number },
     incense: { type: Number },
     position: { type: Number },
-    effect: { type: Number },
-    dailyeffect: { type: Number }
+    effect: { type: Number, "default": 0  },
+    dailyeffect: { type: Number, "default": 0 }
 });
 
 module.exports = mongoose.model('Buddha', BuddhaSchema);
