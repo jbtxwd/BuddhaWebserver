@@ -35,7 +35,7 @@ exports.regist = function(req,res)
                     }
                     else
                     {
-                        result.code = 1;
+                        result.code = 0;
                         result.msg = "regist success";
                         saveResult(res, result);
                     }
@@ -54,7 +54,7 @@ exports.regist = function(req,res)
 
 exports.login = function (req, res)
 {
-    var result = { "code": -1, "msg": "" };
+    var result = { "code": 0, "msg": "" };
     var username = req.body.username;
     var password = req.body.password;
     var deviceid = req.body.deviceid;
@@ -66,7 +66,7 @@ exports.login = function (req, res)
         {
             if (doc != null)
             {
-                result.code = 1;
+                result.code = 0;
                 result.msg = "login sucess";
                 result.userid = doc._id.toString();
                 saveResult(res, result);
@@ -88,7 +88,7 @@ exports.login = function (req, res)
                     }
                     else
                     {
-                        result.code = 1;
+                        result.code = 0;
                         result.msg = "login sucess";
                         result.userid = doc._id.toString();
                         saveResult(res, result);
@@ -104,14 +104,14 @@ exports.login = function (req, res)
             if (doc != null)
             {
                 console.log(doc._id.toString());
-                result.code = 1;
+                result.code = 0;
                 result.msg = "login sucess";
                 result.userid = doc._id.toString();
                 saveResult(res, result);
             }
             else//用户名或者密码不对
             {
-                result.code = 0;
+                result.code = 1;
                 result.msg = "login fail";
                 saveResult(res, result);
             }
