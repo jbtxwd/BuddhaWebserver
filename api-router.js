@@ -6,6 +6,7 @@ var app=express();
 var router = express.Router();
 var accountcontroller = require("./accountcontroller");
 var itemcontroller = require("./api/itemcontroller");
+var wishcontroller = require("./api/wishcontroller");
 router.get('/test',function(req,res){
 	console.log("test ok");
 	res.send('test ok');
@@ -50,11 +51,6 @@ router.post('/buddha/totalrank', function (req, res)
     buddhacontroller.totalrank(req, res);
 });
 
-//router.post('/buddha/dailyrank', function (req, res)
-//{
-//    buddhacontroller.dailyrank(req, res);
-//});
-
 router.post('/item/buy', function (req, res)
 {
     console.log('start item buy');
@@ -64,5 +60,10 @@ router.post('/item/buy', function (req, res)
 router.post('/item/use', function (req, res)
 {
     itemcontroller.use(req, res);
+});
+
+router.post('/wish/make', function (req, res)
+{
+    wishcontroller.make(req, res);
 });
 module.exports = router;

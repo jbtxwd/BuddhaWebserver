@@ -6,17 +6,20 @@ var cluster=require('cluster');
 var numcpus=require('os').cpus().length;
 var http = require('http'); 
 var app=express();
-var mongoose=require('mongoose');
-require("./config/configcontroller").loaditemconfig();//加载配置表
-
+var mongoose = require('mongoose');
+var schedule = require('node-schedule');
+var buddhacontroller = require('./buddhacontroller');
 app.use(express.static('public'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use('/', apiRouter);
 
+require("./config/configcontroller").loaditemconfig();//加载配置表
+require("./config/configcontroller").loadwishconfig();//加载配置表
+
 if(cluster.isMaster)
 {
-	console.log("master start....");
+    console.log("master start....");
 	for(var i=0;i<numcpus;i++){
 		cluster.fork();
 	}
@@ -29,16 +32,8 @@ if(cluster.isMaster)
 		console.log('worker'+worker.process.pid +'died');
 		cluster.fork();
 	});
+    scheduleCronstyle();//开启定时任务
 
-	////mongodb
-	//mongoose.connect('mongodb://127.0.0.1:27017/test');
-	//mongoose.Promise = global.Promise;
-	//var db = mongoose.connection;
-	//db.on('error', console.error.bind(console, 'Mongodb connect error !'))
-	//db.once('open', function() 
-	//{
- //   	console.log('Mongodb started !')
-	//})
 }
 else
 {
@@ -50,6 +45,13 @@ else
 	});
 }
 
-
+function scheduleCronstyle()
+{
+    schedule.scheduleJob('1 0 2 * * *', function ()
+    {
+        console.log('scheduleCronstyle:' + new Date());
+        buddhacontroller.reset();
+    });
+}
 
 module.exports = app;

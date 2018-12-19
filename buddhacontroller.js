@@ -183,7 +183,14 @@ exports.totalrank = function (req, res)
                 });
         });
 }
-
+exports.reset = function ()
+{
+    var updates = { $set: { flower: 0, fruit: 0, cup: 0, incense: 0, dailyeffect: 0 } };
+    Buddha.updateMany(null,updates, function (err, doc)
+    {
+        console.log("reset buddha at=" + new Date());
+    });
+}
 function saveResult(res, data)
 {
     res.status(200);
