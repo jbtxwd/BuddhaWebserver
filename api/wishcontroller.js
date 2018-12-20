@@ -7,6 +7,7 @@ exports.make = function (req, res)
 {
     var result = { "code": 0, "msg": "" };
     var playerid = mongoose.Types.ObjectId(req.body.playerid);
+    var playername = req.body.playername;
     var wishcontent = req.body.wishcontent;
     var buddhaid = req.body.buddhaid;
     var wishid = req.body.wishid;
@@ -14,10 +15,8 @@ exports.make = function (req, res)
 
     var wishconfig = configcontroller.getwishconfig();
     var wish = null;
-    console.log( "----" + wishconfig.length);
     for (i = 0; i < wishconfig.length; i++)
     {
-        console.log(wishconfig[i].ID + "----" + wishid);
         if (wishconfig[i].ID == wishid)
         {
             wish = wishconfig[i];
@@ -25,22 +24,22 @@ exports.make = function (req, res)
     }
     if (wish != null)
     {
-        //, $gte: { blessingscoin: wish.Price }
         var conditions = { _id: playerid, blessingscoin: { $gte: wish.Price } };
         var updates = { $inc: { blessingscoin: -wish.Price } };
-        console.log(wish.Price);
         User.findOneAndUpdate(conditions, updates, function (err, doc)
         {
             if (doc != null)
             {
-                var wish = new Wish();
-                wish.playerid = playerid;
-                wish.creattime = new Date();
-                wish.wishcontent = wishcontent;
-                wish.buddhaid = buddhaid;
-                wish.wishid = wishid;
-                wish.ispublic = ispublic;
-                wish.save();
+                var makewish = new Wish();
+                makewish.playerid = playerid;
+                makewish.creattime = new Date();
+                makewish.wishcontent = wishcontent;
+                makewish.buddhaid = buddhaid;
+                makewish.wishid = wishid;
+                makewish.ispublic = ispublic;
+                makewish.price = wish.Price;
+                makewish.playername = playername;
+                makewish.save();
                 result.code = 0;
                 result.msg = "make wish sucess";
                 saveResult(res, result);
@@ -59,6 +58,40 @@ exports.make = function (req, res)
         result.msg = "can't find wish config,id=" + wishid;
         saveResult(res, result);
     }
+}
+
+exports.get = function (req, res)
+{
+    var result = { "code": 0, "msg": "" };
+    var playerid = mongoose.Types.ObjectId(req.body.playerid);
+    var conditionsprice = { price: { $gte: 0 } };
+    Wish.find(conditionsprice)
+        .select('wishid wishcontent buddhaid ispublic playername creattime')
+        .sort({ "creattime": -1 })
+        .limit(100)
+        .exec(function (err, doc)
+        {
+            result.pricewish = JSON.stringify(doc);
+            Wish.find()
+                .select('wishid wishcontent buddhaid ispublic playername creattime')
+                .sort({ "creattime": -1 })
+                .limit(100)
+                .exec(function (err1, doc1)
+                {
+                    result.allwish = JSON.stringify(doc1);
+
+                    var conditionself = { _id: playerid };
+                    Wish.find(conditionself)
+                        .select('wishid wishcontent buddhaid ispublic playername creattime')
+                        .sort({ "creattime": -1 })
+                        .limit(100)
+                        .exec(function (err2, doc2)
+                        {
+                            result.selfwish = JSON.stringify(doc2);
+                            saveResult(res, result);
+                        });
+                });
+        });
 }
 
 function saveResult(res, data)

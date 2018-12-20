@@ -66,4 +66,9 @@ router.post('/wish/make', function (req, res)
 {
     wishcontroller.make(req, res);
 });
+
+router.post('/wish/get', function (req, res)
+{
+    wishcontroller.get(req, res);
+});
 module.exports = router;
