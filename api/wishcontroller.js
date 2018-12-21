@@ -64,7 +64,7 @@ exports.get = function (req, res)
 {
     var result = { "code": 0, "msg": "" };
     var playerid = mongoose.Types.ObjectId(req.body.playerid);
-    var conditionsprice = { price: { $gte: 0 } };
+    var conditionsprice = { price: { $gt: 0 }, ispublic: 1 };
     Wish.find(conditionsprice)
         .select('wishid wishcontent buddhaid ispublic playername creattime')
         .sort({ "creattime": -1 })
@@ -72,7 +72,8 @@ exports.get = function (req, res)
         .exec(function (err, doc)
         {
             result.pricewish = JSON.stringify(doc);
-            Wish.find()
+            var conditionall = { ispublic: 1 };
+            Wish.find(conditionall)
                 .select('wishid wishcontent buddhaid ispublic playername creattime')
                 .sort({ "creattime": -1 })
                 .limit(100)
@@ -80,7 +81,7 @@ exports.get = function (req, res)
                 {
                     result.allwish = JSON.stringify(doc1);
 
-                    var conditionself = { _id: playerid };
+                    var conditionself = { playerid: playerid };
                     Wish.find(conditionself)
                         .select('wishid wishcontent buddhaid ispublic playername creattime')
                         .sort({ "creattime": -1 })
