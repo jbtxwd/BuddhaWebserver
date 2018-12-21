@@ -7,25 +7,24 @@ var router = express.Router();
 var accountcontroller = require("./accountcontroller");
 var itemcontroller = require("./api/itemcontroller");
 var wishcontroller = require("./api/wishcontroller");
-router.get('/test',function(req,res){
+router.get('/test', function (req, res)
+{
 	console.log("test ok");
 	res.send('test ok');
 });
 
-router.post('/account/regist',function(req,res){
-	console.log('start regist'); 
+router.post('/account/regist', function (req, res)
+{
 	accountcontroller.regist(req,res);
 });
 
 router.post('/account/login', function (req, res)
 {
-    console.log('start login');
     accountcontroller.login(req, res);
 });
 
 router.post('/account/accountdetail', function (req, res)
 {
-    console.log('start accountdetail');
     accountcontroller.accountdetail(req, res);
 });
 

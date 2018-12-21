@@ -59,10 +59,10 @@ exports.login = function (req, res)
     var password = req.body.password;
     var deviceid = req.body.deviceid;
     var accounttype = req.body.accounttype;
-    console.log("accounttype=" + accounttype);
     if (accounttype == 1)//ÓÎ¿ÍµÇÂ½
     {
-        User.findOne({ deviceid: deviceid }, function (err, doc)
+        var condition = { deviceid: deviceid, accounttype: 1 };
+        User.findOne(condition, function (err, doc)
         {
             if (doc != null)
             {
@@ -78,7 +78,7 @@ exports.login = function (req, res)
                 user.password = password;
                 user.accounttype = accounttype;
                 user.deviceid = deviceid;
-                user.save(function (err, ress)
+                user.save(function (err, doc2)
                 {
                     if (err)
                     {
@@ -90,7 +90,7 @@ exports.login = function (req, res)
                     {
                         result.code = 0;
                         result.msg = "login sucess";
-                        result.userid = doc._id.toString();
+                        result.userid = doc2._id.toString();
                         saveResult(res, result);
                     }
                 });
@@ -103,7 +103,6 @@ exports.login = function (req, res)
         {
             if (doc != null)
             {
-                console.log(doc._id.toString());
                 result.code = 0;
                 result.msg = "login sucess";
                 result.userid = doc._id.toString();
@@ -136,7 +135,6 @@ exports.accountdetail = function (req, res)
                 Item.find({ playerid: _id }, function (err2, doc2)
                 {
                     result.item = JSON.stringify(doc2);
-                    console.log(result.item + "-----------------------" + JSON.stringify(result));
                     saveResult(res, result);
                 });
             });
