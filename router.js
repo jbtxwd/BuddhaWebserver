@@ -28,6 +28,11 @@ router.post('/account/accountdetail', function (req, res)
     usercontroller.accountdetail(req, res);
 });
 
+router.post('/user/recharge', function (req, res)
+{
+    usercontroller.recharge(req, res);
+});
+
 router.post('/buddha/addbuddha', function (req, res)
 {
     buddhacontroller.addbuddha(req, res);
