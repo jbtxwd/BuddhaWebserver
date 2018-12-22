@@ -122,7 +122,6 @@ exports.accountdetail = function (req, res)
 {
     var result = { "code": -1, "msg": "" };
     var _id = mongoose.Types.ObjectId(req.body._id);
-    console.log(_id);
     User.findOne({ _id: _id }, function (err, doc)
     {
         if (doc != null)
@@ -142,6 +141,12 @@ exports.accountdetail = function (req, res)
             });
         }
     });
+}
+
+exports.charge = function (req, res)
+{
+    var result = { "code": -1, "msg": "" };
+    var _id = mongoose.Types.ObjectId(req.body._id);
 }
 function saveResult(res, data)
 {
