@@ -2,7 +2,7 @@ var express = require("express");
 var mongoose = require('mongoose');
 var User = require("./user.js");
 var Buddha = require("./buddha.js");
-var Item = require("./api/item.js");
+var Item = require("./item.js");
 exports.regist = function(req,res)
 {
     var username = req.body.username;

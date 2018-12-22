@@ -2,7 +2,7 @@ var express = require("express");
 var mongoose = require('mongoose');
 var User = require("./user.js");
 var Buddha = require("./buddha.js");
-var configcontroller = require("./config/configcontroller");
+var configcontroller = require("../config/configcontroller");
 //Ìí¼Óbuddha
 exports.addbuddha = function (req, res)
 {

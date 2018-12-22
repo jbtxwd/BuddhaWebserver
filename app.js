@@ -1,6 +1,6 @@
-var config = require('./config');
+var config = require('./config/config');
 var express = require('express');
-var apiRouter=require('./api-router');
+var apiRouter=require('./router');
 var bodyparser=require('body-parser');
 var cluster=require('cluster');
 var numcpus=require('os').cpus().length;
@@ -8,7 +8,7 @@ var http = require('http');
 var app=express();
 var mongoose = require('mongoose');
 var schedule = require('node-schedule');
-var buddhacontroller = require('./buddhacontroller');
+var buddhacontroller = require('./api/buddhacontroller');
 app.use(express.static('public'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());

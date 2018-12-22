@@ -1,8 +1,8 @@
 var express = require("express");
 var mongoose = require('mongoose')
-var User = require("./../user.js");
+var User = require("./user.js");
 var Wish = require("./wish.js");
-var configcontroller = require("./../config/configcontroller");
+var configcontroller = require("../config/configcontroller");
 exports.make = function (req, res)
 {
     var result = { "code": 0, "msg": "" };

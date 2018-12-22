@@ -1,9 +1,9 @@
 var express = require("express");
 var mongoose = require('mongoose');
-var User = require("./../user.js");
-var Item = require("./../api/item.js");
-var User = require("./../user.js");
-var configcontroller = require("./../config/configcontroller");
+var User = require("./user.js");
+var Item = require("./item.js");
+var User = require("./user.js");
+var configcontroller = require("../config/configcontroller");
 exports.buy = function (req, res)
 {
     var result = { "code": 0, "msg": "" };

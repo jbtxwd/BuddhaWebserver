@@ -1,10 +1,10 @@
 var express = require('express');
-var buddhacontroller = require('./buddhacontroller');
-var config = require('./config');
 var bodyParser = require('body-parser');
 var app=express();
 var router = express.Router();
-var accountcontroller = require("./accountcontroller");
+var config = require('./config/config');
+var buddhacontroller = require('./api/buddhacontroller');
+var usercontroller = require("./api/usercontroller");
 var itemcontroller = require("./api/itemcontroller");
 var wishcontroller = require("./api/wishcontroller");
 router.get('/test', function (req, res)
@@ -15,17 +15,17 @@ router.get('/test', function (req, res)
 
 router.post('/account/regist', function (req, res)
 {
-	accountcontroller.regist(req,res);
+	usercontroller.regist(req,res);
 });
 
 router.post('/account/login', function (req, res)
 {
-    accountcontroller.login(req, res);
+    usercontroller.login(req, res);
 });
 
 router.post('/account/accountdetail', function (req, res)
 {
-    accountcontroller.accountdetail(req, res);
+    usercontroller.accountdetail(req, res);
 });
 
 router.post('/buddha/addbuddha', function (req, res)

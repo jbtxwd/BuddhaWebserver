@@ -43,7 +43,6 @@ const chargeworksheet = chargeworkbook.Sheets[chargesheetnames[0]];
 function loadchargeconfig()
 {
     chargeconfig = xlsx.utils.sheet_to_json(chargeworksheet);
-    console.log(chargeconfig);
 }
 
 exports.getchargeconfig = () =>
