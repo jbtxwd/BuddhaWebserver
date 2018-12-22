@@ -14,8 +14,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use('/', apiRouter);
 
-require("./config/configcontroller").loaditemconfig();//加载配置表
-require("./config/configcontroller").loadwishconfig();//加载配置表
+require("./config/configcontroller").loadallconfig();//加载配置表
 
 if(cluster.isMaster)
 {
