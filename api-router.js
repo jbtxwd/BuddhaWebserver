@@ -30,13 +30,11 @@ router.post('/account/accountdetail', function (req, res)
 
 router.post('/buddha/addbuddha', function (req, res)
 {
-    console.log('start addbuddha');
     buddhacontroller.addbuddha(req, res);
 });
 
 router.post('/buddha/changeposition', function (req, res)
 {
-    console.log('start changeposition');
     buddhacontroller.changeposition(req, res);
 });
 
@@ -52,7 +50,6 @@ router.post('/buddha/totalrank', function (req, res)
 
 router.post('/item/buy', function (req, res)
 {
-    console.log('start item buy');
     itemcontroller.buy(req, res);
 });
 

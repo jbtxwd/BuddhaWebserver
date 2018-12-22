@@ -122,6 +122,7 @@ exports.accountdetail = function (req, res)
 {
     var result = { "code": -1, "msg": "" };
     var _id = mongoose.Types.ObjectId(req.body._id);
+    console.log(_id);
     User.findOne({ _id: _id }, function (err, doc)
     {
         if (doc != null)
@@ -131,7 +132,8 @@ exports.accountdetail = function (req, res)
                 result.code = 1;
                 result.msg = "login sucess";
                 result.data = doc;
-                result.data.buddhavalue = JSON.stringify(doc1);
+                result.buddhavalue = JSON.stringify(doc1);
+                console.log(JSON.stringify(doc1));
                 Item.find({ playerid: _id }, function (err2, doc2)
                 {
                     result.item = JSON.stringify(doc2);
