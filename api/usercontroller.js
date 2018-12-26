@@ -163,7 +163,6 @@ exports.accountdetail = function (req, res)
                 result.msg = "login sucess";
                 result.data = doc;
                 result.buddhavalue = JSON.stringify(doc1);
-                console.log(JSON.stringify(doc1));
                 Item.find({ playerid: _id }, function (err2, doc2)
                 {
                     result.item = JSON.stringify(doc2);

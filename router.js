@@ -7,6 +7,7 @@ var buddhacontroller = require('./api/buddhacontroller');
 var usercontroller = require("./api/usercontroller");
 var itemcontroller = require("./api/itemcontroller");
 var wishcontroller = require("./api/wishcontroller");
+var freecapturecontroller = require("./api/freecapturecontroller");
 router.get('/test', function (req, res)
 {
 	console.log("test ok");
@@ -72,4 +73,10 @@ router.post('/wish/get', function (req, res)
 {
     wishcontroller.get(req, res);
 });
+
+router.post('/freecapture/freecapture', function (req, res)
+{
+    freecapturecontroller.freecapture(req, res);
+});
+
 module.exports = router;

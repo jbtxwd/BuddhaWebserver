@@ -50,9 +50,25 @@ exports.getchargeconfig = () =>
     return chargeconfig;
 }
 
+//·ÅÉú³ØÅäÖÃ±í
+var animalworkbook = xlsx.readFile("./config/Animal.xlsx")
+let animalconfig = {};
+const animalsheetnames = animalworkbook.SheetNames;
+const animalworksheet = animalworkbook.Sheets[animalsheetnames[0]];
+function loadanimalconfig()
+{
+    animalconfig = xlsx.utils.sheet_to_json(animalworksheet);
+}
+
+exports.getanimalconfig = () =>
+{
+    return animalconfig;
+}
+
 exports.loadallconfig = () =>
 {
     loaditemconfig();
     loadwishconfig();
     loadchargeconfig();
+    loadanimalconfig();
 }
