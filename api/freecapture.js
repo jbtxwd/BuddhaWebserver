@@ -3,6 +3,7 @@ var mongoose = require('./db.js'),
 
 var FreeCaptureSchema = new Schema({
     userid: { type: mongoose.Types.ObjectId },//”√ªß’À∫≈
+    nickname: { type: String },
     count: { type: Number }
 });
 

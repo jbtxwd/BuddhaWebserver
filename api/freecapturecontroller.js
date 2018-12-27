@@ -50,6 +50,7 @@ exports.freecapture = function (req, res)
                         {
                             var newfreecapture = new FreeCapture();
                             newfreecapture.userid = userid;
+                            newfreecapture.nickname = doc.nickname;
                             newfreecapture.count = buycount;
                             newfreecapture.save();
                         }
@@ -83,6 +84,22 @@ exports.freecapture = function (req, res)
         saveResult(res, result);
     }
 }
+
+exports.getrank = function (req, res) {
+    var result = { "code": 0, "msg": "" };
+    var playerid = mongoose.Types.ObjectId(req.body.playerid);
+    var conditionfreecapture = { count: { $gt: 0 }};
+    FreeCapture.find(conditionfreecapture)
+        .select('nickname count')
+        .sort({ "count": 1 })
+        .limit(100)
+        .exec(function (err, doc)
+        {
+            result.freecapture = JSON.stringify(doc);
+            saveResult(res, result);
+        });
+}
+
 function saveResult(res, data)
 {
     res.status(200);

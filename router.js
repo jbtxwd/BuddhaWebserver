@@ -79,4 +79,8 @@ router.post('/freecapture/freecapture', function (req, res)
     freecapturecontroller.freecapture(req, res);
 });
 
+router.post('/freecapture/getrank', function (req, res) {
+    freecapturecontroller.getrank(req, res);
+});
+
 module.exports = router;
