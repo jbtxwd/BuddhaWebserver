@@ -159,16 +159,16 @@ exports.totalrank = function (req, res)
 {
     var result = { "code": 0, "msg": "" };
     var buddhaid = req.body.buddhaid;
-    var conditions = { buddhaid: buddhaid };
+    var conditions = {
+        buddhaid: buddhaid, effect: { $gt: 0 }
+    };
     Buddha.find(conditions)
         .select('playerid playername effect')
         .sort({ "effect": -1 })
         .limit(100)
         .exec(function (err, doc)
         {
-            var result1 = { "code": 0, "msg": "" };
-            var buddhaid1 = req.body.buddhaid;
-            var conditions1 = { buddhaid: buddhaid };
+            var conditions1 = { buddhaid: buddhaid, effect: { $gt: 0 }};
             Buddha.find(conditions1)
                 .select('playerid playername dailyeffect')
                 .sort({ "dailyeffect": -1 })
