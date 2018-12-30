@@ -249,6 +249,30 @@ function rechargesucess(userid,chargeid,res)
     }
 }
 
+exports.changenickname = function (req, res)
+{
+    var result = { "code": -1, "msg": "" };
+    var userid = mongoose.Types.ObjectId(req.body._id);
+    var nickname = req.body.nickname;
+    var condition = { _id: userid };
+    var update = { nickname: nickname };
+    User.findOneAndUpdate(condition, update, function (err, doc)
+    {
+        if (doc != null)
+        {
+            result.code = 0;
+            result.msg = "change nicknam sucess";
+            saveResult(res, result);
+        }
+        else
+        {
+            result.code = 1;
+            result.msg = "change nicknam fail";
+            saveResult(res, result);
+        }
+    });
+}
+
 function saveResult(res, data)
 {
     res.status(200);

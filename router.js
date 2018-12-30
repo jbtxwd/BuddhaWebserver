@@ -34,6 +34,11 @@ router.post('/user/recharge', function (req, res)
     usercontroller.recharge(req, res);
 });
 
+router.post('/user/changenickname', function (req, res)
+{
+    usercontroller.changenickname(req, res);
+});
+
 router.post('/buddha/addbuddha', function (req, res)
 {
     buddhacontroller.addbuddha(req, res);
