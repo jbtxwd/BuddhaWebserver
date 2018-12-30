@@ -168,7 +168,7 @@ exports.totalrank = function (req, res)
         .limit(100)
         .exec(function (err, doc)
         {
-            var conditions1 = { buddhaid: buddhaid, effect: { $gt: 0 }};
+            var conditions1 = { buddhaid: buddhaid, dailyeffect: { $gt: 0 }};
             Buddha.find(conditions1)
                 .select('playerid playername dailyeffect')
                 .sort({ "dailyeffect": -1 })
