@@ -159,7 +159,7 @@ exports.accountdetail = function (req, res)
         {
             Buddha.find({ playerid: _id }, function (err1, doc1)
             {
-                result.code = 1;
+                result.code = 0;
                 result.msg = "login sucess";
                 result.data = doc;
                 result.buddhavalue = JSON.stringify(doc1);
