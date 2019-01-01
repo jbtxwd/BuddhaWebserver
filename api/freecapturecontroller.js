@@ -90,13 +90,21 @@ exports.getrank = function (req, res) {
     var playerid = mongoose.Types.ObjectId(req.body.playerid);
     var conditionfreecapture = { count: { $gt: 0 }};
     FreeCapture.find(conditionfreecapture)
-        .select('nickname count')
-        .sort({ "count": 1 })
+        .select('userid nickname count')
+        .sort({ "count": -1 })
         .limit(100)
         .exec(function (err, doc)
         {
             result.freecapture = JSON.stringify(doc);
-            saveResult(res, result);
+            var conditionfreecaptureself = { userid: playerid };
+            FreeCapture.findOne(conditionfreecaptureself, function (err1, doc1)
+            {
+                if (doc1 != null)
+                {
+                    result.self = JSON.stringify(doc1)
+                }
+                saveResult(res, result);
+            });
         });
 }
 
