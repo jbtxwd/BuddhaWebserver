@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var User = require("./user.js");
 var Buddha = require("./buddha.js");
 var Item = require("./item.js");
+var Wish = require("./wish.js");
+var FreeCapture = require("./freecapture.js");
 var iap = require('in-app-purchase');
 var configcontroller = require("../config/configcontroller");
 iap.config(
@@ -262,6 +264,24 @@ exports.changenickname = function (req, res)
         {
             result.code = 0;
             result.msg = "change nicknam sucess";
+   
+            var conditionbuddha = { playerid: userid };
+            var updatebuddha = { playername: nickname };
+            Buddha.updateMany(conditionbuddha, updatebuddha, function (errbuddha, docbuddha)
+            {
+            });
+
+            var conditionwish = { playerid: userid };
+            var updatewish = { playername: nickname };
+            Wish.updateMany(conditionwish, updatewish, function (errwish, docwish)
+            {
+            });
+
+            var conditionfree = { userid: userid };
+            var updatefree = { nickname: nickname };
+            FreeCapture.updateMany(conditionfree, updatefree, function (errfree, docfree)
+            {
+            });
             saveResult(res, result);
         }
         else
