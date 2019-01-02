@@ -132,7 +132,8 @@ exports.login = function (req, res)
     }
     else if (accounttype == 2)//ÓÃ»§ÃûÃÜÂëµÇÂ¼
     {
-        User.findOne({ username: username, password: password }, function (err, doc)
+        var condition2 = { username: username, password: password, accounttype: 2 };
+        User.findOne(condition2, function (err, doc)
         {
             if (doc != null)
             {
