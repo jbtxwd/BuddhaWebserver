@@ -4,7 +4,9 @@ var apiRouter=require('./router');
 var bodyparser=require('body-parser');
 var cluster=require('cluster');
 var numcpus=require('os').cpus().length;
-var http = require('http'); 
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
 var app=express();
 var mongoose = require('mongoose');
 var schedule = require('node-schedule');
@@ -41,7 +43,30 @@ else
   		var host = server.address().address;
   		var port = server.address().port;
   		console.log('app listening at http://%s:%s', host, port);
-	});
+    });
+
+    var privateKey = fs.readFileSync('./config/2_monster.j6game.com.key', 'utf8');
+    var certificate = fs.readFileSync('./config/1_monster.j6game.com_bundle.crt', 'utf8');
+    var credentials = { key: privateKey, cert: certificate };
+
+    var httpsServer = https.createServer(credentials, app);
+
+    httpsServer.listen(config.httpsport, function ()
+    {
+        console.log('HTTPS Server is running on: https');
+    });
+
+    //var httpsserver = https.createServer(
+    //    {
+    //        key:  fs.readFileSync(),
+    //        cert: fs.readFileSync("./config/1_monster.j6game.com_bundle.crt")
+
+    //    }, app.listen(config.httpsport, function ()
+    //    {
+    //        var host = httpsserver.address().address;
+    //        var port = httpsserver.address().port;
+    //        console.log('app listening at https://%s:%s', host, port);
+    //    }));
 }
 
 function scheduleCronstyle()

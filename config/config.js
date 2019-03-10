@@ -5,7 +5,8 @@ var config = {
   host: '123.206.210.77', //域名
   field_max: 50000,
   field_min: 1000,
-  port: 9000,
+    port: 9000,
+    httpsport: 9001,
   headicon_size:256,
   // 文件上传配置
   upload_temp: './public/temp',
