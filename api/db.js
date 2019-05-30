@@ -1,6 +1,6 @@
 // JavaScript source code
 var mongoose = require('mongoose'),
-DB_URL = 'mongodb://localhost:27017/test';
+DB_URL = 'mongodb://localhost:27017/buddhism';
 
 /**
  * Á¬½Ó

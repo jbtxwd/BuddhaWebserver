@@ -3,6 +3,7 @@ Library/
 ExportedObj/
 obj/
 xcode/
+.vs/
 *.svd
 *.userprefs
 *.csproj
